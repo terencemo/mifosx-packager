@@ -1,0 +1,29 @@
+{
+  "variables": {
+    "ak": "ACCESS KEY",
+    "sk": "SECRET KEY"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `ak`}}",
+      "secret_key": "{{user `sk`}}",
+      "region": "ap-southeast-1",
+      "source_ami": "ami-08505c5a",
+      "instance_type": "t1.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "packer-quick-start {{timestamp}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "scripts": [
+        "scripts/ubuntu/init.sh",
+        "scripts/common/mifosx.sh",
+        "scripts/ubuntu/authbind-https.sh",
+        "scripts/ubuntu/cleanup.sh"
+      ],
+      "type": "shell"
+    }
+  ]
+}
